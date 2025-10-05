@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>meishiFX v7.0</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>meishiFX v1.0</h1>
+            <p>复古音效生成器 (混响版)</p>
+        </header>
+
+        <div class="core-functions">
+            <button id="resetButton" class="function-button">重置参数 (Reset)</button>
+            <button id="randomizeButton" class="function-button">随机参数 (Randomize)</button>
+            <button id="exportWavButton" class="function-button">导出 .wav</button>
+            <button id="saveJsonButton" class="function-button">保存配置</button>
+            <button id="loadJsonButton" class="function-button">加载配置</button>
+            <input type="file" id="loadJsonInput" accept=".json" style="display: none;">
+        </div>
+
+        <div class="main-content">
+            <aside class="presets-panel">
+                <button class="preset-button" data-preset="coin">金币 (Coin)</button>
+                <button class="preset-button" data-preset="laser">激光 (Laser)</button>
+                <button class="preset-button" data-preset="explosion">爆炸 (Explosion)</button>
+                <button class="preset-button" data-preset="powerup">增强 (Powerup)</button>
+                <button class="preset-button" data-preset="hit">命中 (Hit)</button>
+                <button class="preset-button" data-preset="jump">跳跃 (Jump)</button>
+                <button class="preset-button" data-preset="blip">提示音 (Blip)</button>
+            </aside>
+            <div class="main-panels-container">
+                <main class="controls-panel">
+                    <div class="controls-grid">
+                        <div class="controls-group">
+                            <h2>基础波形</h2>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="waveTypeSelect">波形 (Wave)</label><span class="lock-icon" data-param-key="waveType">🔓</span>
+                                </div>
+                                <select id="waveTypeSelect">
+                                    <option value="square" selected>方波 (Square)</option>
+                                    <option value="sawtooth">锯齿波 (Sawtooth)</option>
+                                    <option value="triangle">三角波 (Triangle)</option>
+                                    <option value="sine">正弦波 (Sine)</option>
+                                    <option value="noise">噪声 (Noise)</option>
+                                </select>
+                            </div>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="frequencySlider">起始频率 (Frequency)</label><span class="lock-icon" data-param-key="frequency">🔓</span>
+                                    <span id="frequencyValueSpan">440 Hz</span>
+                                </div>
+                                <input type="range" id="frequencySlider" min="20" max="2000" value="440" step="1">
+                            </div>
+                        </div>
+
+                        <div class="controls-group">
+                            <h2>音量包络 (Envelope)</h2>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="attackTimeSlider">起音 (Attack)</label><span class="lock-icon" data-param-key="attackTime">🔓</span>
+                                    <span id="attackTimeValueSpan">0.02</span>
+                                </div>
+                                <input type="range" id="attackTimeSlider" min="0" max="1" value="0.02" step="0.01">
+                            </div>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="sustainTimeSlider">持续 (Sustain)</label><span class="lock-icon" data-param-key="sustainTime">🔓</span>
+                                    <span id="sustainTimeValueSpan">0.20</span>
+                                </div>
+                                <input type="range" id="sustainTimeSlider" min="0" max="1" value="0.2" step="0.01">
+                            </div>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="decayTimeSlider">衰减 (Decay)</label><span class="lock-icon" data-param-key="decayTime">🔓</span>
+                                    <span id="decayTimeValueSpan">0.30</span>
+                                </div>
+                                <input type="range" id="decayTimeSlider" min="0" max="1" value="0.3" step="0.01">
+                            </div>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="sustainPunchSlider">延音增强 (Sustain Punch)</label><span class="lock-icon" data-param-key="sustainPunch">🔓</span>
+                                    <span id="sustainPunchValueSpan">0.00</span>
+                                </div>
+                                <input type="range" id="sustainPunchSlider" min="0" max="2" value="0" step="0.1">
+                            </div>
+                        </div>
+                        
+                        <div class="controls-group">
+                            <h2>移相器 (Phaser)</h2>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="phaserFreqSlider">移相频率 (Freq)</label><span class="lock-icon" data-param-key="phaserFreq">🔓</span>
+                                    <span id="phaserFreqValueSpan">1500 Hz</span>
+                                </div>
+                                <input type="range" id="phaserFreqSlider" min="20" max="8000" value="1500" step="1">
+                            </div>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="phaserOctavesSlider">移相八度 (Octaves)</label><span class="lock-icon" data-param-key="phaserOctaves">🔓</span>
+                                    <span id="phaserOctavesValueSpan">0.0</span>
+                                </div>
+                                <input type="range" id="phaserOctavesSlider" min="0" max="7" value="0" step="0.1">
+                            </div>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="phaserSpeedSlider">移相速度 (Speed)</label><span class="lock-icon" data-param-key="phaserSpeed">🔓</span>
+                                    <span id="phaserSpeedValueSpan">0.0 Hz</span>
+                                </div>
+                                <input type="range" id="phaserSpeedSlider" min="0" max="20" value="0" step="0.1">
+                            </div>
+                        </div>
+
+                        <div class="controls-group">
+                            <h2>失真 (Distortion)</h2>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="distortionTypeSelect">失真类型 (Type)</label><span class="lock-icon" data-param-key="distortionType">🔓</span>
+                                </div>
+                                <select id="distortionTypeSelect">
+                                    <option value="soft" selected>柔和 (Soft)</option>
+                                    <option value="hard">硬朗 (Hard)</option>
+                                </select>
+                            </div>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="distortionAmountSlider">失真量 (Amount)</label><span class="lock-icon" data-param-key="distortionAmount">🔓</span>
+                                    <span id="distortionAmountValueSpan">0.00</span>
+                                </div>
+                                <input type="range" id="distortionAmountSlider" min="0" max="1" value="0" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <div class="controls-group">
+                            <h2>颤音 (Vibrato)</h2>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="vibratoDepthSlider">颤音深度 (Depth)</label><span class="lock-icon" data-param-key="vibratoDepth">🔓</span>
+                                    <span id="vibratoDepthValueSpan">0</span>
+                                </div>
+                                <input type="range" id="vibratoDepthSlider" min="0" max="100" value="0" step="1">
+                            </div>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="vibratoSpeedSlider">颤音速度 (Speed)</label><span class="lock-icon" data-param-key="vibratoSpeed">🔓</span>
+                                    <span id="vibratoSpeedValueSpan">0.0 Hz</span>
+                                </div>
+                                <input type="range" id="vibratoSpeedSlider" min="0" max="30" value="0" step="0.1">
+                            </div>
+                        </div>
+
+                        <div class="controls-group">
+                            <h2>滤波器 (Filters)</h2>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="lpFilterCutoffSlider">低通截止 (Low-pass)</label><span class="lock-icon" data-param-key="lpFilterCutoff">🔓</span>
+                                    <span id="lpFilterCutoffValueSpan">20000 Hz</span>
+                                </div>
+                                <input type="range" id="lpFilterCutoffSlider" min="20" max="20000" value="20000" step="1">
+                            </div>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="lpFilterResonanceSlider">低通共振 (Resonance)</label><span class="lock-icon" data-param-key="lpFilterResonance">🔓</span>
+                                    <span id="lpFilterResonanceValueSpan">1.00</span>
+                                </div>
+                                <input type="range" id="lpFilterResonanceSlider" min="0.1" max="30" value="1" step="0.1">
+                            </div>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="lpFilterSweepSlider">低通扫频 (LP Sweep)</label><span class="lock-icon" data-param-key="lpFilterSweep">🔓</span>
+                                    <span id="lpFilterSweepValueSpan">0.00</span>
+                                </div>
+                                <input type="range" id="lpFilterSweepSlider" min="-1" max="1" value="0" step="0.01">
+                            </div>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="hpFilterCutoffSlider">高通截止 (High-pass)</label><span class="lock-icon" data-param-key="hpFilterCutoff">🔓</span>
+                                    <span id="hpFilterCutoffValueSpan">20 Hz</span>
+                                </div>
+                                <input type="range" id="hpFilterCutoffSlider" min="20" max="20000" value="20" step="1">
+                            </div>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="hpFilterResonanceSlider">高通共振 (Resonance)</label><span class="lock-icon" data-param-key="hpFilterResonance">🔓</span>
+                                    <span id="hpFilterResonanceValueSpan">1.00</span>
+                                </div>
+                                <input type="range" id="hpFilterResonanceSlider" min="0.1" max="30" value="1" step="0.1">
+                            </div>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="hpFilterSweepSlider">高通扫频 (HP Sweep)</label><span class="lock-icon" data-param-key="hpFilterSweep">🔓</span>
+                                    <span id="hpFilterSweepValueSpan">0.00</span>
+                                </div>
+                                <input type="range" id="hpFilterSweepSlider" min="-1" max="1" value="0" step="0.01">
+                            </div>
+                        </div>
+
+                        <div class="controls-group">
+                            <h2>琶音/序列 (Arpeggiation)</h2>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="arpeggioSpeedSlider">琶音速度 (Arp. Speed)</label><span class="lock-icon" data-param-key="arpeggioSpeed">🔓</span>
+                                    <span id="arpeggioSpeedValueSpan">0.00</span>
+                                </div>
+                                <input type="range" id="arpeggioSpeedSlider" min="0" max="50" value="0" step="0.1">
+                            </div>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="arpeggioJumpSlider">音高跳跃 (Arp. Jump)</label><span class="lock-icon" data-param-key="arpeggioJump">🔓</span>
+                                    <span id="arpeggioJumpValueSpan">0</span>
+                                </div>
+                                <input type="range" id="arpeggioJumpSlider" min="-24" max="24" value="0" step="1">
+                            </div>
+                        </div>
+                        
+                        <div class="controls-group">
+                            <h2>高级混响 (Reverb)</h2>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="reverbTypeSelect">混响类型</label><span class="lock-icon" data-param-key="reverbType">🔓</span>
+                                </div>
+                                <select id="reverbTypeSelect">
+                                    <option value="none">加载中...</option>
+                                </select>
+                            </div>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="reverbMixSlider">混响混合度 (Mix)</label><span class="lock-icon" data-param-key="reverbMix">🔓</span>
+                                    <span id="reverbMixValueSpan">0.00</span>
+                                </div>
+                                <input type="range" id="reverbMixSlider" min="0" max="1" value="0" step="0.01">
+                            </div>
+                        </div>
+
+                        <div class="controls-group">
+                            <h2>频率滑音 (Pitch Sweep)</h2>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="freqSlideSlider">滑音 (Slide)</label><span class="lock-icon" data-param-key="freqSlide">🔓</span>
+                                    <span id="freqSlideValueSpan">0.00</span>
+                                </div>
+                                <input type="range" id="freqSlideSlider" min="-1" max="1" value="0" step="0.01">
+                            </div>
+                            <div class="param-slider">
+                                <div class="param-slider-header">
+                                    <label for="deltaFreqSlideSlider">增量滑音 (Delta)</label><span class="lock-icon" data-param-key="deltaFreqSlide">🔓</span>
+                                    <span id="deltaFreqSlideValueSpan">0.00</span>
+                                </div>
+                                <input type="range" id="deltaFreqSlideSlider" min="-1" max="1" value="0" step="0.01">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="player-controls">
+                        <button id="playButton">播放 (Play)</button>
+                        <button id="stopButton">停止 (Stop)</button>
+                    </div>
+                </main>
+
+                <aside class="history-panel">
+                    <div class="history-header">
+                        <h2>历史记录</h2>
+                        <div class="history-filter">
+                            <label for="filterFavoritesCheckbox">收藏:</label>
+                            <input type="checkbox" id="filterFavoritesCheckbox">
+                            <label for="reorderOnPlayCheckbox" style="margin-left: 10px;">重排:</label>
+                            <input type="checkbox" id="reorderOnPlayCheckbox">
+                        </div>
+                    </div>
+                    <ul id="historyList">
+                    </ul>
+                </aside>
+            </div>
+            </div>
+    </div>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

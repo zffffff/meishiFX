@@ -1,0 +1,319 @@
+/* 全局样式 */
+:root {
+    --bg-color: #282c34;
+    --primary-text-color: #abb2bf;
+    --highlight-color: #61afef; /* Blue for Play */
+    --stop-color: #e06c75;
+    /* Red for Stop */
+    --container-bg-color: #3a404a;
+    --button-text-color: #ffffff;
+    --history-bg-color: #2c313a;
+    --history-item-hover-bg-color: #3a404a;
+    --favorite-color: #e5c07b;
+    --delete-color: #e06c75;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--primary-text-color);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.container {
+    width: 100%;
+    max-width: 1300px;
+    background-color: var(--container-bg-color);
+    border-radius: 8px;
+    padding: 15px 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+header {
+    text-align: center;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+    color: var(--highlight-color);
+}
+
+header p {
+    margin: 5px 0 0;
+    font-size: 0.9em;
+}
+
+.core-functions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.function-button {
+    flex-grow: 1;
+    background-color: var(--bg-color);
+    color: var(--primary-text-color);
+    border: 1px solid var(--primary-text-color);
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 0.85em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.function-button:hover {
+    background-color: var(--highlight-color);
+    color: var(--button-text-color);
+    border-color: var(--highlight-color);
+}
+
+/* ==================== 布局修改 ==================== */
+.main-content {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.main-panels-container {
+    display: flex;
+    gap: 20px;
+    flex-grow: 1;
+    min-width: 0;
+}
+/* ================================================== */
+
+.controls-panel {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.history-panel {
+    flex-shrink: 0;
+    width: 200px;
+    background-color: var(--history-bg-color);
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid var(--bg-color);
+}
+
+.history-header {
+    padding: 0 5px;
+    border-bottom: 1px solid var(--container-bg-color);
+    margin-bottom: 5px;
+}
+
+.history-header h2 {
+    margin-top: 0;
+    text-align: center;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.history-filter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8em;
+    margin-bottom: 10px;
+}
+
+#historyList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 520px;
+    overflow-y: auto;
+}
+
+#historyList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 5px;
+    font-size: 0.8em;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+#historyList li:hover {
+    background-color: var(--history-item-hover-bg-color);
+}
+
+.history-item-main {
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.history-item-actions {
+    display: flex;
+    gap: 8px;
+    padding-left: 5px;
+}
+
+.history-btn {
+    cursor: pointer;
+    font-size: 1.2em;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.favorite-btn.favorited {
+    color: var(--favorite-color);
+}
+
+.delete-btn:hover {
+    color: var(--delete-color);
+}
+
+.controls-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px 20px;
+}
+
+.controls-group {
+    border: 1px solid var(--bg-color);
+    border-radius: 6px;
+    padding: 5px 15px 10px 15px;
+    margin-bottom: 0;
+    min-height: 120px;
+}
+
+.param-slider {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.param-slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    gap: 8px;
+    height: 1.1em;
+}
+
+.param-slider label {
+    width: auto;
+    font-size: 0.8em;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.param-slider span {
+    width: auto;
+    font-family: monospace;
+    font-size: 0.8em;
+    color: var(--highlight-color);
+}
+
+.param-slider input[type="range"],
+.param-slider select {
+    width: 100%;
+    margin: 0;
+}
+
+.param-slider select {
+    background-color: var(--bg-color);
+    color: var(--primary-text-color);
+    border: 1px solid var(--primary-text-color);
+    border-radius: 4px;
+    padding: 5px;
+    width: 100%;
+    font-size: 0.9em;
+}
+
+.player-controls {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.player-controls button {
+    border: none;
+    border-radius: 5px;
+    padding: 12px 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-grow: 1;
+}
+
+#playButton {
+    background-color: var(--highlight-color);
+    color: var(--button-text-color);
+}
+
+#playButton:hover {
+    background-color: #529bde;
+}
+
+#stopButton {
+    background-color: var(--stop-color);
+    color: var(--button-text-color);
+}
+
+#stopButton:hover {
+    background-color: #c95d66;
+}
+
+.player-controls button:active {
+    transform: scale(0.99);
+}
+
+.player-controls button:disabled {
+    background-color: #4a4f58;
+    cursor: not-allowed;
+}
+
+.lock-icon {
+    cursor: pointer;
+    user-select: none;
+}
+
+.lock-icon.locked {
+    color: var(--highlight-color);
+}
+
+/* ==================== 新增预设面板样式 ================== */
+.presets-panel {
+    flex-shrink: 0;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.preset-button {
+    width: 100%;
+    background-color: var(--history-bg-color);
+    color: var(--primary-text-color);
+    border: 1px solid var(--bg-color);
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.preset-button:hover {
+    background-color: var(--highlight-color);
+    color: var(--button-text-color);
+    border-color: var(--highlight-color);
+}
+/* ======================================================= */

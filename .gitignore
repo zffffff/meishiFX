@@ -1,0 +1,33 @@
+# ---------------------------------
+# 跑马灯RPG 子项目 复古音效编辑器 .gitignore 文件
+# ---------------------------------
+
+# irs 混响依赖文件夹
+irs/EMT140-Plate/
+irs/openair/
+irs/spring/
+
+# 临时工作文件夹
+temp/
+
+# 构建输出文件夹
+dist/
+build/
+
+# 日志及备份文件
+DEV_LOG.md
+*.log
+*.bak
+
+# 项目专用文件
+# 忽略合并工具脚本和输出
+meishiFX_merge_tool.py
+meishiFX_merged_code.txt
+
+# 操作系统生成的文件
+.DS_Store
+Thumbs.db
+
+# 代码编辑器配置文件
+.vscode/
+.idea/
